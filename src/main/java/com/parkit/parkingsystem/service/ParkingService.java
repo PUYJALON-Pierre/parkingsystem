@@ -32,11 +32,10 @@ public class ParkingService {
     try {
       ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
       if (parkingSpot != null && parkingSpot.getId() > 0) {
-        String vehicleRegNumber = getVehichleRegNumber();
         parkingSpot.setAvailable(false);
-        parkingSpotDAO.updateParking(parkingSpot);// allot this parking space and mark it's
-                                                  // availability as
-        // false
+        String vehicleRegNumber = getVehichleRegNumber();
+        /*allot this parking space and mark it's availability as false*/
+        parkingSpotDAO.updateParking(parkingSpot); 
 
         Date inTime = new Date();
         Ticket ticket = new Ticket();
@@ -47,19 +46,19 @@ public class ParkingService {
         ticket.setPrice(0);
         ticket.setInTime(inTime);
         ticket.setOutTime(null);
-
-        /* Set recurringUser et ajout message 5 pourcent */
-        Ticket previousTicket = ticketDAO.getTicket(vehicleRegNumber);
-        if (previousTicket != null) {
+        /* Set recurringUser and add Discount message */
+        int countTicket = ticketDAO.getTicketCount(vehicleRegNumber);
+        if (countTicket > 0) {
           ticket.setRecurringUser(true);
           System.out.println(
-              "Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.");
-        } else
-          ticket.setRecurringUser(false);
+              "Welcome back! "
+              + "As a recurring user of our parking lot, you'll benefit from a 5% discount.");
+        } else {
+          ticket.setRecurringUser(false); 
+        }
         
         ticketDAO.saveTicket(ticket);
    
-       
         System.out.println("Generated Ticket and saved in DB");
         System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
         System.out
@@ -101,16 +100,16 @@ public class ParkingService {
     System.out.println("2 BIKE");
     int input = inputReaderUtil.readSelection();
     switch (input) {
-    case 1: {
-      return ParkingType.CAR;
-    }
-    case 2: {
-      return ParkingType.BIKE;
-    }
-    default: {
-      System.out.println("Incorrect input provided");
-      throw new IllegalArgumentException("Entered input is invalid");
-    }
+      case 1: {
+        return ParkingType.CAR;
+      }
+      case 2: {
+        return ParkingType.BIKE;
+      }
+      default: {
+        System.out.println("Incorrect input provided");
+        throw new IllegalArgumentException("Entered input is invalid");
+      }
     }
   }
 

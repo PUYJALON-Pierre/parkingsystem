@@ -23,23 +23,22 @@ public class FareCalculatorService {
     }
 
     switch (ticket.getParkingSpot().getParkingType()) {
-    case CAR: {
-      if (ticket.getRecurringUser() == true) {
-        ticket.setPrice(0.95 * (duration * Fare.CAR_RATE_PER_HOUR));
-      } else
-        ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-      break;
-    }
-    case BIKE: {
-      if (ticket.getRecurringUser() == true) {
-
-        ticket.setPrice(0.95 * (duration * Fare.BIKE_RATE_PER_HOUR));
-      } else
-        ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
-      break;
-    }
-    default:
-      throw new IllegalArgumentException("Unkown Parking Type");
+      case CAR: {
+        if (ticket.getRecurringUser() == true) {
+          ticket.setPrice(0.95 * (duration * Fare.CAR_RATE_PER_HOUR));
+        } else
+          ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
+        break;
+      }
+      case BIKE: {
+        if (ticket.getRecurringUser() == true) {
+          ticket.setPrice(0.95 * (duration * Fare.BIKE_RATE_PER_HOUR));
+        } else
+          ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+        break;
+      }
+      default:
+        throw new IllegalArgumentException("Unkown Parking Type");
     }
   }
 }

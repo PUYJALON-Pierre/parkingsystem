@@ -10,14 +10,14 @@ public class Ticket {
   private Date inTime;
   private Date outTime;
 
-  /* ajout d'une variable RecurentUSer */
-  private Boolean recurringUser = false;
+ 
+  private boolean recurringUser = false;
 
-  public Boolean getRecurringUser() {
+  public boolean getRecurringUser() {
     return recurringUser;
   }
 
-  public void setRecurringUser(Boolean recurringUser) {
+  public void setRecurringUser(boolean recurringUser) {
     this.recurringUser = true;
   }
 

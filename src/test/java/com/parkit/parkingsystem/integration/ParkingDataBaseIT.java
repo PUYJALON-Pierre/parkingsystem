@@ -1,5 +1,6 @@
 package com.parkit.parkingsystem.integration;
 
+import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
@@ -15,10 +16,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
@@ -83,17 +88,25 @@ public class ParkingDataBaseIT {
     initialTicket.setId(1);
     initialTicket.setVehicleRegNumber("ABCDEF");
     initialTicket.setPrice(0);
-    initialTicket.setInTime(new Date(System.currentTimeMillis() - 1000 * 60 * 60));
+    initialTicket.setInTime(new Date(System.currentTimeMillis() / (1000 * 60 * 60)));
     initialTicket.setOutTime(null);
 
     ticketDAO.saveTicket(initialTicket);
-    initialTicket.setOutTime(new Date(System.currentTimeMillis() - 1000 * 60 * 60));
-    ticketDAO.updateTicket(initialTicket);
+    Ticket ticket = ticketDAO.getTicket("ABCDEF");
+
+    // add 1 hour to get exit time
+    Date exitTimeDate = new Date((System.currentTimeMillis() + 1) / (1000 * 60 * 60));
+    ticket.setOutTime(exitTimeDate);
+    double exitTime = ticket.getOutTime().getTime() / (1000 * 60 * 60);
+
+    ticketDAO.updateTicket(ticket);
 
     // Check that ticket is retrieve while exiting by not being equal to 0
     parkingService.processExitingVehicle();
 
-    Ticket ticket = ticketDAO.getTicket("ABCDEF");
+    assertEquals((exitTime * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
+    assertEquals(exitTimeDate, ticket.getOutTime());
+
     assertNotNull(ticket.getPrice());
     assertNotNull(ticket.getOutTime());
 

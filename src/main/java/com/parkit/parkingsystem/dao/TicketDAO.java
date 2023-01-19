@@ -25,7 +25,6 @@ public class TicketDAO {
       con = dataBaseConfig.getConnection();
       PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET);
       // ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME,
-      // RECURRING_USER)
       // ps.setInt(1,ticket.getId());
       ps.setInt(1, ticket.getParkingSpot().getId());
       ps.setString(2, ticket.getVehicleRegNumber());
@@ -34,6 +33,9 @@ public class TicketDAO {
       ps.setTimestamp(5,
           (ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
       return ps.execute();
+      
+    } catch (RuntimeException ex) {
+      logger.error("Error fetching next available slot", ex);
     } catch (Exception ex) {
       logger.error("Error fetching next available slot", ex);
     } finally {
@@ -68,6 +70,8 @@ public class TicketDAO {
       }
       dataBaseConfig.closeResultSet(rs);
       dataBaseConfig.closePreparedStatement(ps);
+    } catch (RuntimeException ex) {
+      logger.error("Error fetching next available slot", ex);
     } catch (Exception ex) {
       logger.error("Error fetching next available slot", ex);
     } finally {
@@ -86,7 +90,10 @@ public class TicketDAO {
       ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));
       ps.setInt(3, ticket.getId());
       ps.execute();
+      dataBaseConfig.closePreparedStatement(ps);
       return true;
+    } catch (RuntimeException ex) {
+      logger.error("Error saving ticket info", ex);
     } catch (Exception ex) {
       logger.error("Error saving ticket info", ex);
     } finally {
@@ -95,6 +102,12 @@ public class TicketDAO {
     return false;
   }
 
+  /**Method that count and return number of occurence of a ticket with a specific vehicleRegNumber from a database
+   * @author PUYJALON Pierre
+   * @since 18/01/2023
+   * @return int countTicket (number of occurence)
+   * @param String vehicleRegNumber (plate number of a car)
+   * */
   public int getTicketCount(String vehicleRegNumber) {
 
     Connection con = null;
@@ -111,6 +124,8 @@ public class TicketDAO {
       }
       dataBaseConfig.closeResultSet(rs);
       dataBaseConfig.closePreparedStatement(ps);
+    } catch (RuntimeException ex) {
+      logger.error("Error fetching next count ticket number", ex);
     } catch (Exception ex) {
       logger.error("Error fetching next count ticket number", ex);
     } finally {

@@ -19,7 +19,10 @@ public class DataBasePrepareService {
       // clear ticket entries;
       connection.prepareStatement("truncate table ticket").execute();
 
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
+      e.printStackTrace();
+    }
+    catch (Exception e) {
       e.printStackTrace();
     } finally {
       dataBaseTestConfig.closeConnection(connection);

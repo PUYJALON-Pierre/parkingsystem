@@ -27,13 +27,17 @@ public class DataBaseConfigTest {
       dataBaseConfig.closePreparedStatement(ps);
       dataBaseConfig.closeResultSet(rs);
 
+    } catch (RuntimeException ex) {
+      assertTrue(false);
+
     } catch (Exception ex) {
       assertTrue(false);
+
     } finally {
       dataBaseConfig.closeConnection(con);
     }
   }
-  
+
   @Test
   public void ticketSQLRequestTest() {
     DataBaseConfig dataBaseConfig = new DataBaseConfig();
@@ -49,8 +53,12 @@ public class DataBaseConfigTest {
       dataBaseConfig.closePreparedStatement(ps);
       dataBaseConfig.closeResultSet(rs);
 
+    } catch (RuntimeException ex) {
+      assertTrue(false);
+
     } catch (Exception ex) {
       assertTrue(false);
+
     } finally {
       dataBaseConfig.closeConnection(con);
     }

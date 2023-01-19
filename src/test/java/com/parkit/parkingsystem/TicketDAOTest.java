@@ -33,7 +33,7 @@ public class TicketDAOTest {
 
   @Test
   public void saveTicketTest() {
-    // ARRANGE: ticket for a car at parking spot 1 with number WXYZ
+    // ARRANGE: create ticket for a car at parking spot 1 with number WXYZ
     Ticket ticketToSave = new Ticket();
     ticketToSave.setParkingSpot(new ParkingSpot(1, ParkingType.CAR, false));
     ticketToSave.setVehicleRegNumber("WXYZ");
@@ -49,14 +49,12 @@ public class TicketDAOTest {
     assertEquals(ticketToSave.getParkingSpot(), ticketSave.getParkingSpot());
     assertEquals(ticketToSave.getVehicleRegNumber(), ticketSave.getVehicleRegNumber());
     assertEquals(ticketToSave.getPrice(), ticketSave.getPrice());
-    // assertequals error
     assertNotNull(ticketSave.getInTime());
-
   }
 
   @Test
   public void getTicketCountTest0() {
-    // ARRANGE: Unknow platenumber by DB
+    // ARRANGE: Unknown plate number from DB
     String VehicleNumber = "LMNOP";
     int occurenceInReal = 0;
 

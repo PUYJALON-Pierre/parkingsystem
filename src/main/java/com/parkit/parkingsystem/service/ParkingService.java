@@ -9,6 +9,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class ParkingService {
@@ -34,8 +35,8 @@ public class ParkingService {
       if (parkingSpot != null && parkingSpot.getId() > 0) {
         parkingSpot.setAvailable(false);
         String vehicleRegNumber = getVehichleRegNumber();
-        /*allot this parking space and mark it's availability as false*/
-        parkingSpotDAO.updateParking(parkingSpot); 
+        /* allot this parking space and mark it's availability as false */
+        parkingSpotDAO.updateParking(parkingSpot);
 
         Date inTime = new Date();
         Ticket ticket = new Ticket();
@@ -46,19 +47,16 @@ public class ParkingService {
         ticket.setPrice(0);
         ticket.setInTime(inTime);
         ticket.setOutTime(null);
-        /* Set recurringUser and add Discount message */
+        
+        /* Checking if vehicleRegNumber is already in DB and if it is, add Discount message */
         int countTicket = ticketDAO.getTicketCount(vehicleRegNumber);
         if (countTicket > 0) {
-          ticket.setRecurringUser(true);
-          System.out.println(
-              "Welcome back! "
+          System.out.println("Welcome back! "
               + "As a recurring user of our parking lot, you'll benefit from a 5% discount.");
-        } else {
-          ticket.setRecurringUser(false); 
-        }
-        
+        } 
+
         ticketDAO.saveTicket(ticket);
-   
+
         System.out.println("Generated Ticket and saved in DB");
         System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
         System.out
@@ -119,12 +117,22 @@ public class ParkingService {
       Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
       Date outTime = new Date();
       ticket.setOutTime(outTime);
+      //setting recurringUser before calculating price
+      int countTicket = ticketDAO.getTicketCount(vehicleRegNumber);
+      if (countTicket > 1) {
+        ticket.setRecurringUser(true);
+      } else {
+        ticket.setRecurringUser(false);
+      }
+      
       fareCalculatorService.calculateFare(ticket);
       if (ticketDAO.updateTicket(ticket)) {
         ParkingSpot parkingSpot = ticket.getParkingSpot();
         parkingSpot.setAvailable(true);
         parkingSpotDAO.updateParking(parkingSpot);
-        System.out.println("Please pay the parking fare:" + ticket.getPrice());
+        // converting to DecimalFormat in order to show price to customer
+        DecimalFormat df = new DecimalFormat("###.##");
+        System.out.println("Please pay the parking fare:" + df.format(ticket.getPrice()));
         System.out.println("Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber()
             + " is:" + outTime);
       } else {

@@ -8,16 +8,17 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class DataBaseConfig {
 
   private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
-  public Connection getConnection() throws ClassNotFoundException, SQLException {
+  public FileInputStream fileInputStream;
+
+  public Connection getConnection() throws ClassNotFoundException, SQLException, IOException {
     Connection connection = null;
     logger.info("Create DB connection");
     try {
-      FileInputStream fileInputStream = new FileInputStream("src/main/resources/log4j2.properties");
+      fileInputStream = new FileInputStream("src/main/resources/log4j2.properties");
       Properties properties = new Properties();
       properties.load(fileInputStream);
 
@@ -35,8 +36,12 @@ public class DataBaseConfig {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return connection;
 
+    finally {
+      fileInputStream.close();
+    }
+
+    return connection;
   }
 
   public void closeConnection(Connection con) {

@@ -18,7 +18,7 @@ public class Ticket {
   }
 
   public void setRecurringUser(boolean recurringUser) {
-    this.recurringUser = true;
+    this.recurringUser = recurringUser;
   }
 
   public int getId() {

@@ -28,9 +28,7 @@ public class ParkingSpotDAOTest {
 
   @Test
   public void getNextAvailableSlotTest() {
-    // ARRANGE
-    // ACT
-    // ASSERT
+   
     assertTrue(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR) > 0);
     assertTrue(parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE) > 0);
   }

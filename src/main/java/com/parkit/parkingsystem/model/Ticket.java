@@ -10,7 +10,6 @@ public class Ticket {
   private Date inTime;
   private Date outTime;
 
- 
   private boolean recurringUser = false;
 
   public boolean getRecurringUser() {
@@ -30,11 +29,24 @@ public class Ticket {
   }
 
   public ParkingSpot getParkingSpot() {
-    return parkingSpot;
+    if (parkingSpot != null) {
+
+      return new ParkingSpot(parkingSpot.getId(), parkingSpot.getParkingType(),
+          parkingSpot.isAvailable());
+    } else {
+      return null;
+    }
   }
 
   public void setParkingSpot(ParkingSpot parkingSpot) {
-    this.parkingSpot = parkingSpot;
+    if (parkingSpot != null) {
+
+      this.parkingSpot = new ParkingSpot(parkingSpot.getId(), parkingSpot.getParkingType(),
+          parkingSpot.isAvailable());
+
+    } else {
+      this.parkingSpot = null;
+    }
   }
 
   public String getVehicleRegNumber() {
@@ -54,18 +66,40 @@ public class Ticket {
   }
 
   public Date getInTime() {
-    return inTime;
+    if (inTime != null) {
+
+      return new Date(inTime.getTime());
+    } else {
+      return null;
+    }
   }
 
   public void setInTime(Date inTime) {
-    this.inTime = inTime;
+    if (inTime != null) {
+
+      this.inTime = new Date(inTime.getTime());
+    } else {
+      this.inTime = null;
+
+    }
   }
 
   public Date getOutTime() {
-    return outTime;
+    if (outTime != null) {
+
+      return new Date(outTime.getTime());
+    } else {
+      return null;
+    }
   }
 
   public void setOutTime(Date outTime) {
-    this.outTime = outTime;
+    if (outTime != null) {
+
+      this.outTime = new Date(outTime.getTime());
+    } else {
+      this.outTime = null;
+
+    }
   }
 }

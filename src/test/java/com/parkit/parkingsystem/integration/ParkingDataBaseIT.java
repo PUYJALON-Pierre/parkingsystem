@@ -107,8 +107,6 @@ public class ParkingDataBaseIT {
     assertEquals((exitTime * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
     assertEquals(exitTimeDate, ticket.getOutTime());
 
-    assertNotNull(ticket.getPrice());
-    assertNotNull(ticket.getOutTime());
 
   }
 

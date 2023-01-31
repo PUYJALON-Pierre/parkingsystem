@@ -7,7 +7,6 @@
 	<artifactId>parking-system</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<!-- DistributionManagement -->
 	<!-- =============================================================== -->
 	<distributionManagement>
@@ -16,8 +15,6 @@
 			<url>scp://localhost/tmp/</url>
 		</site>
 	</distributionManagement>
-
-
 	<!-- Properties -->
 	<!-- =============================================================== -->
 	<properties>
@@ -25,17 +22,9 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-
 	<!-- Dependencies -->
 	<!-- =============================================================== -->
-
 	<dependencies>
-		<dependency>
-			<groupId>com.github.spotbugs</groupId>
-			<artifactId>spotbugs</artifactId>
-			<version>4.7.3</version>
-			<type>pom</type>
-		</dependency>
 		<dependency>
 			<groupId>com.puppycrawl.tools</groupId>
 			<artifactId>checkstyle</artifactId>
@@ -97,8 +86,6 @@
 			<type>maven-plugin</type>
 		</dependency>
 	</dependencies>
-
-
 	<!-- Build -->
 	<!-- =============================================================== -->
 	<build>
@@ -187,7 +174,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<!-- Generate Reports -->
 	<!-- =============================================================== -->
 	<reporting>
@@ -221,5 +207,4 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
 </project>

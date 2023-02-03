@@ -67,7 +67,7 @@ public class TicketDAOTest {
 
   @Test
   public void getTicketCountTestMoreThan0() {
-    // ARRANGE: Save ticket in DB and save it Two times
+    // ARRANGE: Save ticket in DB and save it two times
     String VehicleNumberKnowFromDB = "HIJKF";
 
     Ticket ticket = new Ticket();
@@ -83,6 +83,7 @@ public class TicketDAOTest {
 
     // ACT
     int occurenceInDB = ticketDAO.getTicketCount(VehicleNumberKnowFromDB);
+    
     //ASSERT
     assertEquals(occurenceInReal, occurenceInDB);
   }

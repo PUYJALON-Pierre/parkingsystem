@@ -1,1 +1,7 @@
 /target/
+.classpath
+.factorypath
+.project
+h
+parkingsystem-cs-cleanup.xml
+parkingsystem-cs-formatter.xml

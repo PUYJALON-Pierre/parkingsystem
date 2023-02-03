@@ -48,7 +48,7 @@ public class ParkingService {
         ticket.setInTime(inTime);
         ticket.setOutTime(null);
         
-        /* Checking if vehicleRegNumber is already in DB and if it is, add Discount message */
+        /* Checking if vehicleRegNumber is already in DB and if it is, add discount message */
         int countTicket = ticketDAO.getTicketCount(vehicleRegNumber);
         if (countTicket > 0) {
           System.out.println("Welcome back! "
@@ -117,6 +117,7 @@ public class ParkingService {
       Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
       Date outTime = new Date();
       ticket.setOutTime(outTime);
+      
       //setting recurringUser before calculating price
       int countTicket = ticketDAO.getTicketCount(vehicleRegNumber);
       if (countTicket > 1) {

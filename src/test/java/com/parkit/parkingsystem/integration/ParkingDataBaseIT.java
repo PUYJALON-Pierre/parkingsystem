@@ -64,8 +64,8 @@ public class ParkingDataBaseIT {
   public void testParkingACar() {
     ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
     parkingService.processIncomingVehicle();
-    ;
-    // TODO: check that a ticket is actually saved in DB (getTicket is not null) and
+    
+    // Check that a ticket is actually saved in DB (getTicket is not null) and
     // Parking table is updated with availability (Check if next available spot is
     // different than 1)
     Ticket ticket = ticketDAO.getTicket("ABCDEF");
@@ -80,9 +80,10 @@ public class ParkingDataBaseIT {
   public void testParkingLotExit() {
     testParkingACar();
     ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
-    // TODO: check that the fare generated and out time are populated correctly in
+   
+    // Check that the fare generated and out time are populated correctly in
     // the database
-    // Create ticket with info and save to DB and update
+    // Create ticket with info 
     Ticket initialTicket = new Ticket();
     initialTicket.setParkingSpot(new ParkingSpot(1, ParkingType.CAR, false));
     initialTicket.setId(1);
@@ -99,15 +100,15 @@ public class ParkingDataBaseIT {
     ticket.setOutTime(exitTimeDate);
     double exitTime = ticket.getOutTime().getTime() / (1000 * 60 * 60);
 
+    //Update ticket
     ticketDAO.updateTicket(ticket);
 
-    // Check that ticket is retrieve while exiting by not being equal to 0
+    // Check that ticket is retrieve while exiting with good informations
     parkingService.processExitingVehicle();
 
     assertEquals((exitTime * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
     assertEquals(exitTimeDate, ticket.getOutTime());
-
-
+    
   }
 
 }

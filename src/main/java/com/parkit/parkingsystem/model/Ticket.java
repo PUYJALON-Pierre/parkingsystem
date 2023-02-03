@@ -10,6 +10,7 @@ public class Ticket {
   private Date inTime;
   private Date outTime;
 
+  //Create variable for identifying recurring users
   private boolean recurringUser = false;
 
   public boolean getRecurringUser() {

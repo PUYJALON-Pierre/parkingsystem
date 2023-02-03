@@ -28,25 +28,23 @@ public class ParkingSpotDAOTest {
 
   @Test
   public void getNextAvailableSlotTest() {
-    // ARRANGE
-    // ACT
-    // ASSERT
+   
     assertTrue(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR) > 0);
     assertTrue(parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE) > 0);
   }
 
   @Test
   public void updateParkingTest() {
+  
     // ARRANGE: create 2 different parkingspot
-
     ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.CAR, false);
     ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.BIKE, false);
+   
     // ACT: update parking
-
     parkingSpotDAO.updateParking(parkingSpot);
     parkingSpotDAO.updateParking(parkingSpot2);
+   
     // ASSERT: compare parking
-
     assertEquals(4, parkingSpot.getId());
     assertEquals(2, parkingSpot2.getId());
 

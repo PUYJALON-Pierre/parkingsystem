@@ -42,7 +42,7 @@ public class ParkingSpotTest {
   }
 
   @Test
-  public void HashCodeTest() {
+  public void hashCodeTest() {
 
     assertEquals(0, parkingSpot.hashCode());
   }
